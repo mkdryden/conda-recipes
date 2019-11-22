@@ -2,9 +2,9 @@
 # This file is licensed under a 3-clause BSD license; see LICENSE.txt.
 
 {% set name = "adwaita-icon-theme" %}
-{% set version = "3.26.1" %}
+{% set version = "3.34.3" %}
 {% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
-{% set sha256 = "28ba7392c7761996efd780779167ea6c940eedfb1bf37cfe9bccb7021f54d79d" %}
+{% set sha256 = "e7c2d8c259125d5f35ec09522b88c8fe7ecf625224ab0811213ef0a95d90b908" %}
 
 package:
   name: {{ name }}
@@ -26,7 +26,9 @@ requirements:
     - gtk3
     - librsvg  # for SVG loading
     - pkg-config
+    - intltool
   run:
+    - librsvg
 
 about:
   home: http://www.gtk.org/
