@@ -12,8 +12,7 @@ package:
 source:
   url: https://github.com/anholt/libepoxy/releases/download/{{ version }}/libepoxy-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    - no-pkgconfig-gl-reqs.patch
+
 
 build:
   number: 0
@@ -28,16 +27,8 @@ requirements:
     - ninja
     - pkg-config
     - pthread-stubs
-    - python
-    - xorg-util-macros
+    - python >=3.5
     - {{ compiler('c') }}
-    - {{ cdt('mesa-libEGL-devel') }}
-    - {{ cdt('mesa-libGL-devel') }}
-  host:
-    - xorg-xproto
-    - xorg-libx11 1.6.*
-  run:
-    - xorg-libx11 1.6.*
 
 test:
   commands:
