@@ -1,0 +1,39 @@
+# Copyright 2016-2017 Peter Williams and collaborators.
+# This file is licensed under a 3-clause BSD license; see LICENSE.txt.
+
+{% set name = "gsettings-desktop-schemas" %}
+{% set version = "3.34.0" %}
+{% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
+{% set sha256 = "288b04260f7040b0e004a8d59c773cfb4e32df4f1b4a0f9d705c51afccc95ead" %}
+
+package:
+  name: {{ name }}
+  version: "{{ version }}"
+
+source:
+  fn: {{ name }}-{{ version }}.tar.xz
+  url: http://ftp.gnome.org/pub/gnome/sources/{{ name }}/{{ version_majmin }}/{{ name }}-{{ version }}.tar.xz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  script_env:
+    - NJOBS
+  run_exports:
+    - {{ pin_compatible('gsettings-desktop-schemas', max_pin='x') }}
+
+requirements:
+  build:
+    - meson
+    - ninja
+    - pkg-config
+    - python >=3
+  host:
+    - glib {{ glib }}
+    - gobject-introspection
+  run:
+    - glib {{ glib }}
+about:
+  home: http://www.gtk.org/
+  license: LGPL
+  summary: GSettings schemas for desktop components
