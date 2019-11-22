@@ -9,14 +9,15 @@ meson_config_args=(
     -D gtk_doc=false
     -D demos=false
     -D examples=false
+    -D quartz_backend=true
+    -D introspection=true
     -D installed_tests=false
-    -D wayland_backend=true
 )
 
 if [ -n "$OSX_ARCH" ] ; then
-    # Clashing libuuid causes compilation problems unless we do this. libuuid
-    # is pulled in by xorg-libSM.
-    rm -rf $PREFIX/include/uuid
+  export LDFLAGS="$LDFLAGS -isysroot ${CONDA_BUILD_SYSROOT} -Wl,-rpath,$PREFIX/lib"
+  export CFLAGS="${CFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}"
+  export CPPFLAGS="${CPPFLAGS} -isysroot ${CONDA_BUILD_SYSROOT}"
 fi
 
 meson builddir --prefix=$PREFIX --libdir=$PREFIX/lib

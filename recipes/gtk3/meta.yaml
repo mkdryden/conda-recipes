@@ -2,9 +2,9 @@
 # This file is licensed under a 3-clause BSD license; see LICENSE.txt.
 
 {% set name = "gtk+" %}
-{% set version = "3.24.9" %}
+{% set version = "3.24.12" %}
 {% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
-{% set sha256 = "577eb0270d9adf2eb2aa4b03f9c7873fadb20cf265194d0139570f738493e635" %}
+{% set sha256 = "1384eba5614fed160044ae0d32369e3df7b4f517b03f4b1f24d383e528f4be83" %}
 
 package:
   name: gtk3  # note customization
@@ -15,9 +15,7 @@ source:
   url: http://ftp.gnome.org/pub/gnome/sources/{{ name }}/{{ version_majmin }}/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
   patches:
-    - m_pi.patch
-    - no-module-warning.patch
-    - meson-rpaths.patch
+    - meson.patch
 
 build:
   number: 0
@@ -31,11 +29,9 @@ requirements:
     - meson
     - ninja
     - pkg-config
-    - pthread-stubs
-    - python
+    - python >=3.5
     - {{ compiler('c') }}
   host:
-    - at-spi2-atk
     - atk
     - cairo {{ cairo }}
     - epoxy 1.*
@@ -43,34 +39,11 @@ requirements:
     - gdk-pixbuf {{ gdk_pixbuf }}
     - glib {{ glib }}
     - gobject-introspection 1.*
-    - libxkbcommon 0.8.*
-    - pango 1.42.*  # XXX This should be `{{ pango }}`, but pin isn't updated yet
-    - wayland 1.*
-    - wayland-protocols
-    - xorg-inputproto
-    - xorg-libice 1.0.*
-    - xorg-libsm 1.2.*
-    - xorg-libx11 1.6.*
-    - xorg-libxcursor 1.2.*
-    - xorg-libxi 1.7.*
-    - xorg-libxinerama 1.1.*
-    - xorg-libxrandr 1.5.*
-    - xorg-libxrender 0.9.*
-    - xorg-xineramaproto 1.2.*
-    - xorg-xproto
+    - pango {{pango}}
   run:
     - gdk-pixbuf {{ gdk_pixbuf }}
     - glib {{ glib }}
-    - libxkbcommon 0.8.*
-    - pango 1.42.* # {{ pango }}
-    - xorg-libice 1.0.*
-    - xorg-libsm 1.2.*
-    - xorg-libx11 1.6.*
-    - xorg-libxcursor 1.2.*
-    - xorg-libxi 1.7.*
-    - xorg-libxinerama 1.1.*
-    - xorg-libxrandr 1.5.*
-    - xorg-libxrender 0.9.*
+    - pango {{ pango }}
 
 test:
   commands:
