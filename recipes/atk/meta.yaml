@@ -1,0 +1,45 @@
+# Copyright 2014-2018 Peter Williams and collaborators.
+# This file is licensed under a 3-clause BSD license; see LICENSE.txt.
+
+{% set name = "atk" %}
+{% set version = "2.35.1" %}
+{% set version_majmin = '.'.join(version.split('.', 2)[:2]) %}
+{% set sha256 = "be9360fa3f845e91f001c20e73b3a0315b38983411b1dc008195f779ac543884" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: http://ftp.gnome.org/pub/gnome/sources/{{ name }}/{{ version_majmin }}/{{ name }}-{{ version }}.tar.xz
+  sha256: {{ sha256 }}
+
+build:
+  number: 1
+  script_env:
+    - NJOBS
+  run_exports:
+    - {{ pin_compatible('atk', max_pin='x.x') }}
+
+requirements:
+  build:
+    - meson
+    - pkg-config
+    - pthread-stubs
+    - {{ compiler('c') }}
+  host:
+    # - dbus {{ dbus }}
+    - glib {{ glib }}
+    - gobject-introspection
+  run:
+    - glib {{ glib }}
+
+test:
+  commands:
+    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]
+    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]
+
+about:
+  home: http://www.gtk.org/
+  license: LGPL
+  summary: D-Bus-based implementation of AT-SPI accessibility framework
